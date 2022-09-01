@@ -1,0 +1,24 @@
+heigth=123;
+depth=73;
+thickness=3;
+poke=30;
+pokes=6;
+rounding=1;
+corner=3;
+sidespace=10;
+
+$fn=30;
+
+minkowski(){
+    minkowski(){
+cube([heigth-rounding-corner*2,depth-rounding-corner*2,thickness-rounding-1],center=true);
+    cylinder(1,corner,corner,center=true);    
+    }
+    sphere(rounding);
+}
+
+for(i=[-1:2:1]){
+minkowski(){
+translate([(heigth/2-pokes/2-thickness)*i,sidespace/2,poke/2])cube([pokes-rounding,depth-2*thickness-rounding-sidespace,poke],center=true);
+    cylinder(0.1,rounding,rounding,center=true);
+}}
