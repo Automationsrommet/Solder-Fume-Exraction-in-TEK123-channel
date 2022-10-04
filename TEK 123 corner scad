@@ -1,0 +1,38 @@
+height=123;
+depth=73;
+thickness=3;
+poke=30;
+pokes=6;
+rounding=1;
+corner=3;
+sidespace=10;
+
+$fn=30;
+
+difference(){
+union(){
+translate([0,depth/2-rounding,0])rotate([180,-90,90])endcap();
+translate([-depth/2+rounding,0,0])rotate([-90,90,90])endcap();
+minkowski(){
+    cube([depth,depth,height],center=true);
+sphere(rounding);
+}
+}
+translate([0,depth/2-rounding,0])cube([depth-2*thickness-2*rounding,depth*2-2*thickness,height-2*thickness-2*pokes-2*rounding],center=true);;
+translate([-depth/2+rounding,0,0])cube([depth*2-2*thickness,depth-2*thickness-2*rounding,height-2*thickness-2*pokes-2*rounding],center=true);;
+}
+module endcap(){
+minkowski(){
+    minkowski(){
+cube([height-rounding-corner*2,depth-rounding-corner*2,thickness-rounding-1],center=true);
+    cylinder(1,corner,corner,center=true);    
+    }
+    sphere(rounding);
+}
+
+for(i=[-1:2:1]){
+minkowski(){
+translate([(height/2-pokes/2-thickness)*i,sidespace/2,poke/2])cube([pokes-rounding,depth-2*thickness-rounding-sidespace,poke],center=true);
+    cylinder(0.1,rounding,rounding,center=true);
+}}
+}
