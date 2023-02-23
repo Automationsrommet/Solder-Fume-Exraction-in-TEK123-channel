@@ -1,0 +1,44 @@
+heigth=100;
+depth=52;
+thickness=3;
+poke=30;
+pokes=6;
+rounding=1;
+
+
+innerheigth=80;
+innerdepth=12;
+screwholes=3;
+screwholeringradius=77.3/2;
+holediameter=66.5;
+
+
+$fn=25;
+
+difference(){
+    union(){
+minkowski(){
+cube([innerheigth+ thickness*2-rounding,innerheigth+ thickness*2-rounding,thickness/2],center=true);
+    sphere(rounding);
+}
+translate([0,0,innerdepth/2])cube([innerheigth-rounding,innerheigth-rounding,innerdepth],center=true);
+}
+for(i=[0:72:359]){
+rotate([0,0,i])
+translate([screwholeringradius,0,0])cylinder(50,screwholes/2,screwholes/2
+    ,center=true);
+}
+for(j=[-1:2:1]){
+
+translate([innerheigth/2*j,0,2.5+thickness/2])
+    rotate([90,90,0])
+    cylinder(90,screwholes/2,screwholes/2
+    ,center=true);
+  translate([innerheigth/2*j-1.5*thickness*j,0,innerdepth-1])
+    rotate([0,0,0])
+    cube([thickness,heigth*2,thickness*2]
+    ,center=true);  
+}
+cylinder(50,holediameter/2,holediameter/2
+    ,center=true);
+}
